@@ -5,8 +5,8 @@ FROM mcr.microsoft.com/playwright:v1.52.0-jammy
 WORKDIR /app
 
 # Install dependencies
-COPY package.json package-lock.json* ./
-RUN npm install
+COPY package.json package-lock.json ./
+RUN npm ci
 
 # Copy the rest of the app
 COPY . .

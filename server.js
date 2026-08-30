@@ -4,6 +4,7 @@ import { spawn } from 'child_process';
 import path from 'path';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
+import { validateStartInput } from './lib/posbistro.js';
 
 dotenv.config();
 
@@ -19,16 +20,16 @@ let currentRun = null;
 app.post('/start', (req, res) => {
   const { email, password, month } = req.body;
 
-  if (!email || !password || !month) {
-    return res.status(400).send('Brakuje danych.');
-  }
+  const validation = validateStartInput({
+    email,
+    password,
+    month,
+    locationId: process.env.POSBISTRO_LOCATION_ID,
+    processRunning: Boolean(currentRun),
+  });
 
-  if (currentRun) {
-    return res.status(409).send('Proces jest już uruchomiony.');
-  }
-
-  if (!process.env.POSBISTRO_LOCATION_ID) {
-    return res.status(500).send('Brak POSBISTRO_LOCATION_ID w konfiguracji.');
+  if (!validation.ok) {
+    return res.status(validation.status).send(validation.message);
   }
 
   // Dane logowania nie są zapisywane na dysku.
