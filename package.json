@@ -11,7 +11,7 @@
     "ci": "npm run check:syntax && npm test"
   },
   "dependencies": {
-    "dotenv": "^16.5.0",
+    "dotenv": "^17.4.2",
     "express": "^4.21.2",
     "playwright": "^1.52.0"
   }
