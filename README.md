@@ -153,3 +153,21 @@ Nie było potrzeby wymieniać systemu POS ani budować dużego systemu od zera. 
 **Completed utility / portfolio project**
 
 Narzędzie zostało przygotowane dla konkretnego procesu biznesowego i działa pod warunkiem posiadania autoryzowanego dostępu do POSbistro oraz zgodności obecnego panelu i raportów z wersją, dla której powstała automatyzacja.
+
+## Automatyczna weryfikacja
+
+Repozytorium zawiera GitHub Actions uruchamiane przy zmianach kodu. CI sprawdza:
+
+- składnię plików JavaScript,
+- generowanie listy dni dla miesiąca, w tym rok przestępny,
+- budowanie URL raportu POSbistro,
+- walidację danych przed uruchomieniem procesu Playwright,
+- normalizację nazw produktów,
+- parser CSV, w tym pola w cudzysłowach i polski separator dziesiętny,
+- agregację dzienną i miesięczną na danych testowych,
+- ignorowanie produktów spoza zdefiniowanej listy,
+- kontrakty bezpieczeństwa repozytorium (`.env`, raporty i dane logowania),
+- `npm audit --audit-level=high`,
+- budowanie obrazu Docker.
+
+Testy nie logują się do prawdziwego POSbistro i nie pobierają rzeczywistych raportów. Zależna od zewnętrznego panelu część Playwright wymaga autoryzowanego konta i pozostaje testem integracyjnym wykonywanym ręcznie.
