@@ -1,5 +1,5 @@
 # Base image with Node and Playwright
-FROM mcr.microsoft.com/playwright:v1.52.0-jammy
+FROM mcr.microsoft.com/playwright:v1.62.1-jammy
 
 # Create app directory
 WORKDIR /app
